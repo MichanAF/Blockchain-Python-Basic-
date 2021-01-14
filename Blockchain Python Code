@@ -1,0 +1,29 @@
+import hashlib #Imports hash library
+
+class Block: #Defines and creates unique signature codes to be sed within the block chain known as "Hashes"
+    def __init__(self, previous_hash, transaction):
+        self.transactions = transaction
+        self.previous_hash = previous_hash
+        string_to_hash = "".join(transaction) + previous_hash
+        self.block_hash = hashlib.sha256(string_to_hash.encode()).hexdigest()
+        
+        blockchain = [] #Blockchain initialisation
+
+genesis_block = Block("Chancellor on brink of second bailout for banks", ["Satoshi sent 1 BTC to Ivan",
+                                                                 "Maria sent 5 BTC to Jenny",
+                                                                 "Satoshi sent 5 BTC to Hal Finney"]) #The first block of the block chain
+
+second_block = Block(genesis_block.block_hash, ["Ivan sent 5 BTC to Liz", 
+                                               "John sent 5 BTC to Jenny"]) #Assigns message to hash
+
+third_block = Block(second_block.block_hash, ["A to C 5 BTC", "G to D 4 BTC"]) #Assigns message to hash
+
+# Allows tracking of blocks and hashes assigned to blocks
+print("Block hash: Genesis Block") 
+print(genesis_block.block_hash)
+
+print("Block hash: Second Block")
+print(second_block.block_hash)
+
+print("Block hash: Third Block")
+print(third_block.block_hash)
